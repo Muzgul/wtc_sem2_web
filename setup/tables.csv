@@ -1,0 +1,2 @@
+tblUsers,usrname varchar(255), first_name varchar(255), last_name varchar(255), email varchar(255), notif BOOLEAN
+tblImage,name varchar(255), creator varchar(255), date_created varchar(255)
