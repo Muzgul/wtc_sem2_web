@@ -39,6 +39,8 @@
                 $this->_addStatus("Table [$tblName] fetch error: No active connection!");
         }
 
-
+        public function getTable(){
+            return $this->_table;
+        }
     }
 ?>

@@ -19,6 +19,52 @@ body{
 }
 
 #footer{
+    position: fixed;
     top: 100vh;
     transform: translateY(-100%);
+}
+
+#content{
+    padding-left: 5vw;
+}
+
+#content div{
+    position: relative;
+    width: 30vw;
+    height: 30vw;
+    box-shadow: 0.1em 0.1em 0.5em grey;
+    transition: all 0.2s;
+}
+
+#content div:hover{
+    box-shadow: 0.1em 0.1em 1em grey;
+    transform: translate(-0.1em, -0.1em);
+}
+
+#content div img{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.2s;
+}
+
+#content div h2{
+    position: absolute;
+    height: 7vw;
+    /* width: 30vw; */
+    top: 20vw;
+    line-height: 7vw;
+    vertical-align: middle;
+    padding-left: 1em;
+}
+
+#content div small{
+    position: absolute;
+    height: 3vw;
+    /* width: 30vw; */
+    top: 27vw;
+    line-height: 3vw;
+    vertical-align: middle;
+    padding-left: 1em;
 }

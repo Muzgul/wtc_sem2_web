@@ -1,11 +1,12 @@
 import indexJS from "./js/index.js";
 import adminJS from "./js/admin.js";
+import footerJS from "./js/footer.js";
 import { fetchPage } from "./js/nav.js";
 
     // Preprocess
     
     fetchPage('php/structure/header.php', '#header');
-    fetchPage('php/structure/footer.php', '#footer');
+    fetchPage('php/structure/footer.php', '#footer', footerJS);
 
     var user = fetchPage('php/session.php');
     if (user == "admin"){
