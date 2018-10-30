@@ -1,2 +1,2 @@
-tblUsers,usrname varchar(255), first_name varchar(255), last_name varchar(255), email varchar(255), notif BOOLEAN
+tblUsers,usrname varchar(255) NOT NULL PRIMARY KEY, passwd varchar(256), first_name varchar(255), last_name varchar(255), email varchar(255), notif BOOLEAN, verif varchar(6)
 tblImage,name varchar(255), creator varchar(255), date_created varchar(255), url varchar(255)

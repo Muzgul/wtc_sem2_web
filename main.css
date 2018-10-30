@@ -2,6 +2,7 @@ body{
     margin: 0;
     padding: 0;
     font-size: 1.5vw;
+    color: #50514F
 }
 .section-nav{
     background: darkslategray;
@@ -28,7 +29,7 @@ body{
     padding-left: 5vw;
 }
 
-#content div{
+#content .image{
     position: relative;
     width: 30vw;
     height: 30vw;
@@ -36,12 +37,12 @@ body{
     transition: all 0.2s;
 }
 
-#content div:hover{
+#content .image:hover{
     box-shadow: 0.1em 0.1em 1em grey;
     transform: translate(-0.1em, -0.1em);
 }
 
-#content div img{
+#content .image img{
     position: absolute;
     left: 50%;
     top: 50%;
@@ -49,7 +50,7 @@ body{
     transition: all 0.2s;
 }
 
-#content div h2{
+#content .image h2{
     position: absolute;
     height: 7vw;
     /* width: 30vw; */
@@ -59,7 +60,7 @@ body{
     padding-left: 1em;
 }
 
-#content div small{
+#content .image small{
     position: absolute;
     height: 3vw;
     /* width: 30vw; */
@@ -67,4 +68,53 @@ body{
     line-height: 3vw;
     vertical-align: middle;
     padding-left: 1em;
+}
+
+form {
+    /* border: 0.2vw solid #70C1B3; */
+    padding: 1vw;
+    margin: 1vw auto;
+    width: 40vw;
+    padding: 0;
+    /* text-align: center; */
+}
+
+/* #signup{
+    line-height: 10vw;
+    vertical-align: middle;
+} */
+
+#signup .form_group{
+    position: relative;
+    width: 18vw;
+    height: 5vw;
+    display: inline-block;
+    margin-left: 1.5vw;
+}
+
+#signup .form_group > *{
+    position: absolute;
+    width: 15vw;
+    height: 3vw;
+}
+
+#signup .form_group > label{
+    line-height: 4vw;
+    vertical-align: middle;
+    z-index: 3;
+    margin-left: 1vw;
+    transition: all 0.5s;
+}
+
+#signup .form_group > input{
+    padding-left: 1vw;
+    border: none;
+    border-radius: 0.3vw;
+    box-shadow: 0.2vw 0.2vw 1vw #50514F;
+    z-index: 2;
+    display: block;
+}
+
+#signup .form_group:hover label{
+    transform: translateY(-3vw);
 }

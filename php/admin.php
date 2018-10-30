@@ -8,8 +8,5 @@
     });
     $db = new clsDatabase();
     $db->createTables();
-    $db->dropTables();
-    $db->createTables();
-    $db->dropTables("test");
     echo $db->__toHTML();
 ?>

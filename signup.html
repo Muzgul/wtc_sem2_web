@@ -1,0 +1,48 @@
+
+<form id="signup">
+    <div class="form_group">
+        <label for="usrname">Username</label>
+        <input type="text" id="usrname" name="usrname" required>
+        <small>Required.</small>
+    </div>
+    <div class="form_group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+        <small>Required.</small>
+    </div>
+    <div class="form_group">
+        <label for="first_name">First name</label>
+        <input type="text" id="first_name" name="first_name">
+    </div>
+    <div class="form_group">
+        <label for="last_name">Last name</label>
+        <input type="text" id="last_name" name="last_name">
+    </div>
+    <div class="form_group">
+        <label for="passwd">Password</label>
+        <input type="password" name="passwd" id="passwd" required>
+    </div>
+    <div class="form_group">
+        <label for="passwd_conf">Retype password</label>
+        <input type="password" name="passwd_conf" id="passwd_conf" required>
+    </div>
+    <input type="submit" name="submit" value="Signup">
+    <small id="alert"></small>
+</form>
+<form id="login">
+    <div class="form_group">
+        <label for="usrname">Username</label>
+        <input type="text" id="usrname" name="usrname" required>
+        <small>Required.</small>
+    </div>
+    <div class="form_group">
+        <label for="passwrd">Password</label>
+        <input type="password" name="passwd" id="passwd" required>
+    </div>
+    <div class="form_group">
+        <label for="verif">Send verification email.</label>
+        <input type="checkbox" name="verif" id="verif">
+    </div>
+    <input type="submit" name="submit" value="Login">
+</form>
+<a href="">Reset Password</a>
