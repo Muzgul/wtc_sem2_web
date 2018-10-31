@@ -27,9 +27,12 @@
                     array_push($error, "Verified your email address.");
                 }
             }
-            if ($_POST['submit'] == "Reset"){
-                
+            if ($_POST['submit'] == "sendReset"){
+                $success = $usr->sendPassReset();
+                $_SESSION['reset'] = true;
             }
+            if ($_POST['submit'] == "Reset")
+                $success = $usr->updateUser($_POST['usrname'], 'passwd', $_POST['passwd']);
         }else
             array_push($error, "Valid username");
     }
@@ -41,7 +44,8 @@
     }
 
     if ($success == true){
-        $_SESSION['login'] = $_POST['usrname'];
+        if ($_POST['submit'] == "Login")
+            $_SESSION['login'] = $_POST['usrname'];
         ?>
             <h2>Success!</h2>
             <a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>">Home</a>

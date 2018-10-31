@@ -70,13 +70,17 @@
         public function updateUser( $usrname, $field, $value ){
             $pdo = $this->_getPDO();
             if ($pdo != null){
+                if ($field == "passwd")
+                    $value = hash($this->_hash, $value);
                 $sql = "UPDATE `$this->_table` SET `$field` = '$value' WHERE `usrname` = '$usrname'";
                 try {
                     $stmt = $pdo->query($sql);
                 }catch (Exception $e){
                     $stmt = null;
                     $this->_addStatus("User [$usrName] update error: SQL Exception!");
+                    return false;
                 }
+                return true;
             }
         }
 
@@ -161,16 +165,8 @@
         
                 $message_body = '
                 <div>
-                    <form action="' . $_SERVER['HTTP_HOST'] . '/php/auth.php" method="POST">
-                        <label for="usrname">Username</label>
-                        <input type="text" name="usrname" id="usrname" readonly value="' . $usr['usrname'] . '">
-                        <br>
-                        <label for="passwd">New password:</label>
-                        <input type="text" name="passwd" id="passwd">
-                        <br>
-                        <input type="text" name="submit" value="Reset" hidden>
-                        <input type="submit" value="Reset">    
-                    </form>
+                    <p>To reset your password please follow this link: </p>
+                    <a href="http://' . $_SERVER['HTTP_HOST'] . '/php/passReset.php?login=' . $usr['usrname'] . '">Reset Password</a>
                 </div>';
                 $cmd = $message_body . `$cmd`;
                 mail($to,'Message from Camagru', $cmd,$headers);

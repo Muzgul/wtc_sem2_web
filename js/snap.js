@@ -51,4 +51,12 @@ export default function(){
     //     };
     //     ajax.send(image);
     // });
+
+    var overlay = document.getElementsByClassName("overlay");
+
+    Array.from(overlay).forEach(element => {
+        element.addEventListener("click", function(element){
+            document.getElementById("cover").src = element.target.src;
+        });
+    });
 }

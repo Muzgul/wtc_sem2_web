@@ -57,4 +57,25 @@ export default function (){
                 request.send(form);
             }
     });
+
+    document.getElementById("reset").addEventListener("submit", function(e){
+        // Preprocess
+            e.preventDefault();
+            var form = document.getElementById("reset");
+            form = new FormData(form);
+            form.append('submit', 'sendReset');
+        // Verification of Info
+            var isValid = true;
+        // Submit
+            if ( isValid ){
+                var request = new XMLHttpRequest();
+                request.open("POST", "../php/auth.php");
+                request.onload = function (){
+                    if (request.status >= 200 && request.status < 400){
+                        document.getElementById("content").innerHTML = request.responseText;
+                    }
+                };
+                request.send(form);
+            }
+    });
 }
