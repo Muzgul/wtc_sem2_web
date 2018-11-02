@@ -7,8 +7,11 @@
     $tbl->fetchTable('tblimage');
     $tbl = $tbl->getTable();
 
+
     foreach ($tbl as $row_num => $row) {
-    ?><div class="image"><img src="<?php
+    ?><div class="image"><img id="<?php
+        echo $row['id'];    
+    ?>" src="<?php
         echo $row['url'];
     ?>" alt="<?php 
         echo $row['name'];

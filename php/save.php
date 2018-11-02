@@ -1,20 +1,37 @@
 <?php
-    // Get the data
-    $imageData=file_get_contents("php://input");
-    echo $imageData;
+    session_start();
+    $usr_name = $_SESSION['login'];
+    
+    spl_autoload_register(function ($class_name) {
+        require_once './sql/' . $class_name . '.php' ;
+    });
 
-    // Remove the headers (data:,) part. 
-    // A real application should use them according to needs such as to check image type
-    $filteredData=substr($imageData, strpos($imageData, ",")+1);
-
-    // Need to decode before saving since the data we received is already base64 encoded
-    $unencodedData=base64_decode($filteredData);
-
-    echo "unencodedData".$unencodedData;
-
-    // Save file.  This example uses a hard coded filename for testing,
-    // but a real application can specify filename in POST variable
-    $fp = fopen( 'test.png', 'wb' );
-    fwrite( $fp, $unencodedData);
-    fclose( $fp );
+    if (isset($_POST['submit']) && $_POST['submit'] == "create"){
+        $base = imagecreatefrompng("temp.png");
+        $overlay = imagecreatefrompng($_POST['image']);
+        list($dw, $dh) = getimagesize("temp.png");
+        list($sw, $sh) = getimagesize($_POST['image']);
+        $offx = $_POST['offx'];
+        $offy = $_POST['offy'];
+        $res = imagecopyresized($base, $overlay, $offx, $offy, 0, 0, $sw, $sh, $sw, $sh);
+        if ($res){
+            $url = uniqid() . ".png";
+            $name = $_POST['name'];
+            if ($name == "" || $name == null)
+                $name = $url;
+            imagepng($base, "../assets/images/" . $url);
+            $img = new clsImage();
+            $img->pushImage($usr_name, $name, $url);
+            echo json_encode($img->getImage());
+        }
+        imagedestroy($base);
+        imagedestroy($overlay);
+    }else{
+        $imageData=file_get_contents("php://input");
+        $filteredData=substr($imageData, strpos($imageData, ",")+1);
+        $unencodedData=base64_decode($filteredData);
+        $fp = fopen( 'temp.png', 'wb' );
+        fwrite( $fp, $unencodedData);
+        fclose( $fp );
+    }
 ?>
