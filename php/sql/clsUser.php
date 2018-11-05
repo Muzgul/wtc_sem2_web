@@ -175,6 +175,38 @@
             return false;
         }
 
+        public function sendNotif( $valArr ){
+            $usr = $this->_user;
+            if (count($usr) > 0 && $usr['notif'] == 1){
+                $from = "mmacdona@student.wethinkcode.co.za";
+                $to = $usr['email'];
+                $headers = "From: ".$from."\r\n";
+                $headers .= "Reply-To: ".$from."\r\n";
+                $headers .= "MIME-Version: 1.0\r\n";
+                $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+                    
+                $gpg_path = '/usr/local/bin/gpg';
+                $home_dir = $_SERVER['DOCUMENT_ROOT'];
+                $user_env = 'web';
+                
+                $cmd = "HOME=$home_dir USER=$user_env $gpg_path" .
+                    "--quiet --no-secmem-warning --encrypt --sign --armor " .
+                    "--recipient $to --local-user $from";
+        
+                $message_body = '
+                <div>
+                    <h2>Notification</h2>
+                    <p>You comment has received a ' . $valArr['category'] . ' from ' . $valArr['usrname'] . '.</p>
+                    <p>' . $valArr['value'] . '</p>
+                    <small>To unsibscribe please logon and change your preferences.</small>
+                </div>';
+                $cmd = $message_body . `$cmd`;
+                mail($to,'Message from Camagru', $cmd,$headers);
+                return true;
+            }
+            return false;
+        }
+
         public function getUser(){
             return $this->_user;
         }

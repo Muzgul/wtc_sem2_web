@@ -1,5 +1,6 @@
 <?php
     require_once "clsConnection.php";
+    require_once "clsUser.php";
 
     class clsTable extends clsConnection {
         
@@ -42,8 +43,15 @@
         public function pushMisc($valArr){
             $pdo = $this->_getPDO();
             if ($pdo != null){
-                $sql = "INSERT INTO `tblmisc` (`category`, `image`, `usrname`, `value`) VALUES ";
-                $sql .= "('" . $valArr['category'] . "', '" . $valArr['image'] . "' , '" . $valArr['usrname'] . "' , '" . $valArr['value'] . "')";
+                $date = time();
+                $sql = "INSERT INTO `tblmisc` (`category`, `image`, `usrname`, `value`, `date_created`) VALUES ";
+                $sql .= "('" . $valArr['category'] . "', '" . $valArr['image'] . "' , '" . $valArr['usrname'] . "' , '" . $valArr['value'] . "' , '" . $date . "')";
+                // if ($valArr['category'] == "like"){
+                //     $sql .= " WHERE NOT EXISTS ( SELECT * FROM `tblmisc` WHERE ";
+                //     $sql .= "`category` = '" . $valArr['category'] . "'";
+                //     $sql .= " AND `image` = '" . $valArr['image']. "'";
+                //     $sql .= " AND `usrname` = '" . $valArr['usrname']. "'";
+                // }
                 $stmt = null;
                 try {
                     $stmt = $pdo->query($sql);
@@ -55,6 +63,9 @@
                 }
                 if ($stmt != null){
                     $this->_addStatus("Misc [" . $valArr['category'] . "] push success!");
+                    $usr = new clsUser();
+                    $usr->fetchUser($valArr['creator']);
+                    $usr->sendNotif( $valArr );
                     return true;
                 }
             }else
@@ -66,7 +77,7 @@
             $pdo = $this->_getPDO();
             if ($pdo != null){
                 if (empty($this->_table)){
-                    $sql = "SELECT * FROM `tblmisc` WHERE `$field` = '$value'";
+                    $sql = "SELECT * FROM `tblmisc` WHERE `$field` = '$value' ORDER BY `date_created` DESC";
                     $stmt = null;
                     try {
                         $stmt = $pdo->query($sql);

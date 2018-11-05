@@ -1,3 +1,6 @@
+import { fetchPage } from './nav.js';
+import signupJS from'./signup.js';
+
 export default function(){
 
     var video = document.querySelector("#videoElement");
@@ -31,6 +34,9 @@ export default function(){
     };
 
     var save = function(){
+        var is_logged = fetchPage("../php/session.php");
+        if (!is_logged)
+            fetchPage("../signup.html", '#content', signupJS);
         var image = document.getElementById("cover");
         var name = document.getElementById("img_name").value;
         var request = new XMLHttpRequest();

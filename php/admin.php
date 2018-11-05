@@ -1,6 +1,6 @@
 <?php
-    // include './sql/' . "clsTable" . '.php';
-    // include './sql/' . "clsUser" . '.php';
+    // if (!isset($_SERVER['HTTP_REFERER']))
+    // header('Location: http://' . $_SERVER['HTTP_HOST']);
 
     spl_autoload_register(function ($class_name) {
         require_once 'sql/' . $class_name . '.php' ;

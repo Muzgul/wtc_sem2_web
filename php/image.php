@@ -1,5 +1,9 @@
 <?php
     session_start();
+
+    if (!isset($_SERVER['HTTP_REFERER']))
+    header('Location: http://' . $_SERVER['HTTP_HOST']);
+
     $usr_name = $_SESSION['login'];
 
     spl_autoload_register(function ($class_name) {
@@ -34,7 +38,7 @@
     <button id="post_comment">Comment</button>
     <button id="post_like">Like</button>
     <div id="likes_tooltip">
-        <?php echo count($likes); ?>
+        <span id="likes_count"><?php echo count($likes); ?></span>
         <span id="likes_tooltip_text">
             <?php
                 foreach ($likes as $key => $value) {
@@ -50,7 +54,7 @@
     <?php
         foreach ($comments as $key => $row) {
             ?>
-                <li><?php echo $row['value'] . " - " . $row['usrname']; ?></li>
+                <li><?php echo $row['value'] . " - " . $row['usrname'] . "(" . date('r', $row['date_created']) . ")"; ?></li>
             <?php
         }
     ?>

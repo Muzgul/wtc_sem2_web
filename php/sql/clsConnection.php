@@ -1,4 +1,7 @@
 <?php
+    if (!isset($_SERVER['HTTP_REFERER']))
+        header('Location: http://' . $_SERVER['HTTP_HOST']);
+        
     abstract class clsConnection {
         
         // Properties

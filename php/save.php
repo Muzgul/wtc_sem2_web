@@ -1,5 +1,9 @@
 <?php
     session_start();
+    
+    if (!isset($_SERVER['HTTP_REFERER']))
+    header('Location: http://' . $_SERVER['HTTP_HOST']);
+
     $usr_name = $_SESSION['login'];
     
     spl_autoload_register(function ($class_name) {
@@ -26,6 +30,7 @@
         }
         imagedestroy($base);
         imagedestroy($overlay);
+        unlink("temp.png");
     }else{
         $imageData=file_get_contents("php://input");
         $filteredData=substr($imageData, strpos($imageData, ",")+1);

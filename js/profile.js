@@ -15,7 +15,10 @@ export default function() {
             }
         };
         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        request.send("method=update&table=user&field=" + input.id + "&value=" + input.value);
+        if (input.type = "checkbox")
+            request.send("method=update&table=user&field=" + input.id + "&value=" + (input.checked ? 1 : 0));
+        else
+            request.send("method=update&table=user&field=" + input.id + "&value=" + input.value);
     };
     for (let i = 0; i < inputs.length; i++) {
         const element = inputs[i];

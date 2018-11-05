@@ -1,5 +1,9 @@
 <?php
     session_start();
+    
+    if (!isset($_SERVER['HTTP_REFERER']))
+    header('Location: http://' . $_SERVER['HTTP_HOST']);
+
     if (isset($_SESSION['reset']) && $_SESSION['reset'] == true){
         ?>
             <form action="auth.php" method="post">

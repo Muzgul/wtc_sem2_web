@@ -1,6 +1,9 @@
 <?php
     session_start();
 
+    if (!isset($_SERVER['HTTP_REFERER']))
+        header('Location: http://' . $_SERVER['HTTP_HOST']);
+
     $usr_name = $_SESSION['login'];
 
     spl_autoload_register(function ($class_name) {
@@ -9,7 +12,7 @@
 
     $arr = $_POST;
     $arr['usrname'] = $usr_name;
-    print_r($arr);
     $tbl = new clsTable();
     $tbl->pushMisc($arr);
+    echo $tbl->__toHTML();
 ?>

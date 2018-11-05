@@ -1,3 +1,8 @@
+<?php
+    if (!isset($_SERVER['HTTP_REFERER']))
+    header('Location: http://' . $_SERVER['HTTP_HOST']);
+?>
+
 <button id="profile">Profile</button>
 <button id="feed">Feed</button>
 <button id="cam">Cam</button>

@@ -43,7 +43,7 @@
             $pdo = $this->_getPDO();
             if ($pdo != null){
                 if (empty($this->_collection)){
-                    $sql = "SELECT * FROM `$this->_table` WHERE `creator` = '$usrName'";
+                    $sql = "SELECT * FROM `$this->_table` WHERE `creator` = '$usrName' ORDER BY `date_created` DESC";
                     $stmt = null;
                     try {
                         $stmt = $pdo->query($sql);
