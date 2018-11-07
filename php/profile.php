@@ -20,7 +20,8 @@
 
     if ($usr) {
     ?>
-        <h2><?php echo $usr['usrname'];?></h2>
+        <label for="usrname">Username</label>
+        <input type="text" name="usrname" id="usrname" value="<?php echo $usr['usrname'];?>">
         <label for="first_name">First Name</label>
         <input type="text" name="first_name" id="first_name" value="<?php echo $usr['first_name'];?>">
         <label for="last_name">Last Name</label>

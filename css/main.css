@@ -87,39 +87,12 @@ form {
     vertical-align: middle;
 } */
 
-#signup .form_group{
+.form_group{
     position: relative;
     width: 18vw;
     height: 5vw;
     display: inline-block;
     margin-left: 1.5vw;
-}
-
-#signup .form_group > *{
-    position: absolute;
-    width: 15vw;
-    height: 3vw;
-}
-
-#signup .form_group > label{
-    line-height: 4vw;
-    vertical-align: middle;
-    z-index: 3;
-    margin-left: 1vw;
-    transition: all 0.5s;
-}
-
-#signup .form_group > input{
-    padding-left: 1vw;
-    border: none;
-    border-radius: 0.3vw;
-    box-shadow: 0.2vw 0.2vw 1vw #50514F;
-    z-index: 2;
-    display: block;
-}
-
-#signup .form_group:hover label{
-    transform: translateY(-3vw);
 }
 
 /* SNAP */
@@ -215,4 +188,10 @@ form {
 /* Show the tooltip text when you mouse over the tooltip container */
 #likes_tooltip:hover #likes_tooltip_text {
     visibility: visible;
+}
+
+/* INDEX */
+
+.page{
+    border: 1px solid black;
 }

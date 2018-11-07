@@ -32,20 +32,20 @@
 <form id="login">
     <div class="form_group">
         <label for="usrname">Username</label>
-        <input type="text" id="usrname" name="usrname" required>
+        <input type="text" id="log_usrname" name="usrname" required>
         <small>Required.</small>
     </div>
     <div class="form_group">
         <label for="passwrd">Password</label>
-        <input type="password" name="passwd" id="passwd" required>
+        <input type="password" name="passwd" id="log_passwd" required>
     </div>
     <div class="form_group">
         <label for="verif">Send verification email.</label>
-        <input type="checkbox" name="verif" id="verif">
+        <input type="checkbox" name="verif" id="log_verif">
     </div>
     <input type="submit" name="submit" value="Login">
 </form>
 <form id="reset">
-    <input type="text" name="usrname" id="usrname">
+    <input type="text" name="usrname" id="reset_usrname">
     <input type="submit" value="Reset">
 </form>

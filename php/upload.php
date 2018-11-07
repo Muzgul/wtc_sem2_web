@@ -12,7 +12,12 @@
     if (isset($_POST['method'])){
         if ($_POST['method'] == "update"){
             $usr = new clsUser();
-            $usr->updateUser($_SESSION['login'], $_POST['field'], $_POST['value']);
+            $res = $usr->updateUser($_SESSION['login'], $_POST['field'], $_POST['value']);
+            if ($res && $_POST['field'] == "usrname"){
+                $tbl = new clsTable();
+                $tbl->updateUsername($_SESSION['login'], $_POST['value']);
+                $_SESSION['login'] = $_POST['value'];
+            }
             echo $usr->__toHTML();
         }else
             echo "its not post";

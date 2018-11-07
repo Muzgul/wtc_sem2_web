@@ -21,8 +21,9 @@
             $pdo = $this->_getPDO();
             if ($pdo != null){
                 if (empty($this->_table)){
-                    $sql = "SELECT * FROM `$tblName`";
+                    $sql = "SELECT * FROM `$tblName` ORDER BY `date_created`";
                     $stmt = null;
+                    $this->_addStatus($sql);
                     try {
                         $stmt = $pdo->query($sql);
                     }catch (Exception $e){
@@ -94,6 +95,29 @@
                     $this->_addStatus("Table [$tblName] fetch error: Content already exists!");
             }else
                 $this->_addStatus("Table [$tblName] fetch error: No active connection!");
+        }
+
+        public function updateUsername( $old, $new ){
+            $pdo = $this->_getPDO();
+            if ($pdo != null){
+                $sql = "UPDATE `tblmisc` SET `usrname` = '$new' WHERE `usrname` = '$old'";
+                try {
+                    $stmt = $pdo->query($sql);
+                }catch (Exception $e){
+                    $stmt = null;
+                    $this->_addStatus("User [$old] update error in tblmisc: SQL Exception!");
+                    return false;
+                }
+                $sql = "UPDATE `tblimage` SET `creator` = '$new' WHERE `creator` = '$old'";
+                try {
+                    $stmt = $pdo->query($sql);
+                }catch (Exception $e){
+                    $stmt = null;
+                    $this->_addStatus("User [$old] update error in tblimage: SQL Exception!");
+                    return false;
+                }
+                return true;
+            }
         }
 
         public function getTable(){

@@ -15,7 +15,6 @@ export default function(){
     }
 
     var canvas = document.createElement("canvas");
-
     var capture = function() {
         canvas.width = video.offsetWidth;
         canvas.height = video.offsetHeight;
@@ -29,28 +28,29 @@ export default function(){
         var request = new XMLHttpRequest();
         request.open("POST",'../php/save.php', false);
         request.setRequestHeader('Content-Type', 'application/upload');
-
         request.send(image);
     };
 
     var save = function(){
         var is_logged = fetchPage("../php/session.php");
         if (!is_logged)
-            fetchPage("../signup.html", '#content', signupJS);
-        var image = document.getElementById("cover");
-        var name = document.getElementById("img_name").value;
-        var request = new XMLHttpRequest();
-        request.open("POST",'../php/save.php', false);
-        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        request.onload = function() {
-            if (request.status >= 200 && request.status < 400) {
-                var resp = request.responseText;
-                var ret = JSON.parse(resp);
-                openModal(ret);
-                reset();
-            }
-        };
-        request.send("submit=create&image=" + image.src + "&name=" + name + "&offx=" + image.style.left + "&offy=" + image.style.top);
+            fetchPage("../html/signup.html", '#content', signupJS);
+        else{
+            var image = document.getElementById("cover");
+            var name = document.getElementById("img_name").value;
+            var request = new XMLHttpRequest();
+            request.open("POST",'../php/save.php', false);
+            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            request.onload = function() {
+                if (request.status >= 200 && request.status < 400) {
+                    var resp = request.responseText;
+                    var ret = JSON.parse(resp);
+                    openModal(ret);
+                    reset();
+                }
+            };
+            request.send("submit=create&image=" + image.src + "&name=" + name + "&offx=" + image.style.left + "&offy=" + image.style.top);
+        }
     };
     var reset = function(){
         var video = document.querySelector("#videoElement");
@@ -59,7 +59,7 @@ export default function(){
         document.getElementById("cover").style.left = 0 + "px";
         document.getElementById("cover").style.top = 0 + "px";
     };
-
+    reset();
     document.getElementById("btnReset").addEventListener("click", reset);
     document.getElementById("btnCapture").addEventListener("click", capture);
     document.getElementById("btnSave").addEventListener("click", save);

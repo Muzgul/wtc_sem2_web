@@ -1,12 +1,13 @@
 import { fetchPage } from './nav.js';
 import signupJS from'./signup.js';
+import indexJS from './index.js';
 
 export default function() {
     // JS for image.php
 
     var creator = document.getElementById("image_creator").innerText;
     var id = document.getElementById("main_image").alt;
-    var user = fetchPage("php/session.php");
+    var user = fetchPage("../php/session.php");
 
     var makeComment = function (){
         var comment = document.getElementById("comment_value").value;
@@ -47,15 +48,32 @@ export default function() {
             likes.innerText = parseInt(likes.innerText) + 1;
         }
     }
+
+    var deleteImg = function (){
+        if (confirm("Are you sure you want to delete this image?")){
+            var request = new XMLHttpRequest();
+            request.open("POST",'../php/misc.php', false);
+            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            request.onload = function() {
+                if (request.status >= 200 && request.status < 400) {
+                    fetchPage("../php/index.php", "#content", indexJS);
+                }
+            };
+            request.send('method=delete&image=' + id);
+        }
+    };
+
     if (user){
         document.getElementById("post_comment").addEventListener("click", makeComment);
         document.getElementById("post_like").addEventListener("click", makeLike);
+        if (user == creator)
+            document.getElementById("delete_img").addEventListener("click", deleteImg);
     }else{
         document.getElementById("post_comment").addEventListener("click", function(){
-            fetchPage("../signup.html", '#content', signupJS);
+            fetchPage("../html/signup.html", '#content', signupJS);
         });
         document.getElementById("post_like").addEventListener("click", function(){
-            fetchPage("../signup.html", '#content', signupJS);
+            fetchPage("../html/signup.html", '#content', signupJS);
         });
     }
 }

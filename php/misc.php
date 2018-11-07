@@ -10,9 +10,14 @@
         require_once './sql/' . $class_name . '.php' ;
     });
 
-    $arr = $_POST;
-    $arr['usrname'] = $usr_name;
-    $tbl = new clsTable();
-    $tbl->pushMisc($arr);
-    echo $tbl->__toHTML();
+    if (isset($_POST['method']) && $_POST['method'] == "delete"){
+        $img = new clsImage();
+        $img->deleteImage($_POST['image']);
+    }else{
+        $arr = $_POST;
+        $arr['usrname'] = $usr_name;
+        $tbl = new clsTable();
+        $tbl->pushMisc($arr);
+        echo $tbl->__toHTML();
+    }
 ?>

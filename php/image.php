@@ -49,6 +49,13 @@
             ?>
         </span>
     </div>
+    <?php 
+        if ($img['creator'] == $usr_name){
+            ?>
+            <button id="delete_img">Delete</button>
+            <?php
+        }
+    ?>
 </div>
 <ul id="image_comments">
     <?php

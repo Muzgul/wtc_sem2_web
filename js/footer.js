@@ -12,7 +12,7 @@ export default function() {
         fetchPage('../php/structure/footer.php', '#footer', footerJS);
         var usr = fetchPage("../php/session.php");
         if (usr == ""){
-            fetchPage("signup.html", '#content', signupJS);
+            fetchPage("../html/signup.html", '#content', signupJS);
         }else
             fetchPage('../php/profile.php', '#content', profileJS);
     });

@@ -38,7 +38,6 @@ export default function (){
             e.preventDefault();
             var form = document.getElementById("login");
             form = new FormData(form);
-            console.log(form.get('verif') != null);
             form.append('submit', 'Login');
         // Verification of Info
             var isValid = true;

@@ -15,7 +15,7 @@ export default function() {
             }
         };
         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        if (input.type = "checkbox")
+        if (input.type == "checkbox")
             request.send("method=update&table=user&field=" + input.id + "&value=" + (input.checked ? 1 : 0));
         else
             request.send("method=update&table=user&field=" + input.id + "&value=" + input.value);

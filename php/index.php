@@ -10,8 +10,14 @@
     $tbl->fetchTable('tblimage');
     $tbl = $tbl->getTable();
 
-
+    $items = 0;
+    $per_page = 9;
     foreach ($tbl as $row_num => $row) {
+        if ($items == 0){
+            ?>
+                <div class="page">
+            <?php
+        }
     ?><div class="image"><img id="<?php
         echo $row['id'];    
     ?>" src="<?php
@@ -25,5 +31,17 @@
     ?> | <?php
         echo date('r', $row['date_created']);
     ?></small></div><?php
+        if ($items == $per_page - 1){
+            $items = 0;
+            ?></div><?php
+        }else
+            $items++;
     }
+    if ($items != 0){
+        ?></div><?php
+    }
+    
+    ?>
+        <button id="page_prev">Prev</button><button id="page_next">Next</button>
+    <?php
 ?>
