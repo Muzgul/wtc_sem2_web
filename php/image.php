@@ -13,6 +13,7 @@
     $img_id = $_GET['image'];
     $img = new clsImage();
     $img->fetchImage($img_id);
+    echo $img->__toHTML();
     $img = $img->getImage();
     $usr = new clsUser();
     $usr->fetchUser($img['creator']);

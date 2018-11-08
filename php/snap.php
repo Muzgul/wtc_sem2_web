@@ -32,8 +32,6 @@
     closedir($dir);
 ?>
 
-<button id="myBtn">Open Modal</button>
-
 <!-- The Modal -->
 <div id="myModal" class="modal">
 

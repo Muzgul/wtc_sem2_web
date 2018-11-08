@@ -20,20 +20,24 @@
         public function fetchImage( $id ){
             $pdo = $this->_getPDO();
             if ($pdo != null){
-                $sql = "SELECT * FROM `$this->_table` WHERE `id` = '$id'";
+                // $sql = "SELECT * FROM `$this->_table` WHERE `id` = '$id'";
+                $sql = "SELECT * FROM `$this->_table` WHERE `id` = :id";
                 $stmt = null;
                 try {
-                    $stmt = $pdo->query($sql);
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute(['id' => $id]);
+                    // $stmt = $pdo->query($sql);
                 }catch (Exception $e){
                     $stmt = null;
                     $this->_addStatus("Image [$name] fetch error: SQL Exception!");
                 }
                 if ($stmt != null){
-                    while ($row = $stmt->fetch())
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
                         $this->_image = $row;
                     $this->_addStatus("Image [$name] fetch success!");
                     return true;
-                }
+                }else
+                    $this->_addStatus($stmt);
             }else
                 $this->_addStatus("Image [$name] fetch error: No active connection!");
             return false;
@@ -43,10 +47,13 @@
             $pdo = $this->_getPDO();
             if ($pdo != null){
                 if (empty($this->_collection)){
-                    $sql = "SELECT * FROM `$this->_table` WHERE `creator` = '$usrName' ORDER BY `date_created` DESC";
+                    // $sql = "SELECT * FROM `$this->_table` WHERE `creator` = '$usrName' ORDER BY `date_created` DESC";
+                    $sql = $sql = "SELECT * FROM `$this->_table` WHERE `creator` = :usrname ORDER BY `date_created` DESC";
                     $stmt = null;
                     try {
-                        $stmt = $pdo->query($sql);
+                        // $stmt = $pdo->query($sql);
+                        $stmt = $pdo->prepare($sql);
+                        $stmt->execute(['usrname' => $usrName]);
                     }catch (Exception $e){
                         $stmt = null;
                         $this->_addStatus("Image [$usrName] fetch error: SQL Exception!");
@@ -67,10 +74,13 @@
             if ($pdo != null){
                 $root = "http://" . $_SERVER['HTTP_HOST'] . "/assets/images/";
                 $sql = "INSERT INTO `$this->_table` (`id`, `name`, `creator`, `date_created`, `url`) VALUES ";
-                $sql .= "('" . $url . "', '" . $name . "' , '" . $usrname . "' , '" . time() . "' , '" . $root . $url . "')";
+                // $sql .= "('" . $url . "', '" . $name . "' , '" . $usrname . "' , '" . time() . "' , '" . $root . $url . "')";
+                $sql .= "(:id, :name, :usrname, :date, :url)";
                 $stmt = null;
                 try {
-                    $stmt = $pdo->query($sql);
+                    // $stmt = $pdo->query($sql);
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute(['id' => $url, 'name' => $name, 'usrname' => $usrname, 'date' => time(), 'url' => $root . $url]);
                 }catch (Exception $e){
                     $stmt = null;
                     $this->_addStatus("Image [" . $name . "] push error: SQL Exception!");
