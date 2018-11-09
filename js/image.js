@@ -30,22 +30,23 @@ export default function() {
     };
 
     var makeLike = function(){
-        var request = new XMLHttpRequest();
-        request.open("POST",'../php/misc.php', false);
-        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        request.onload = function() {
-            if (request.status >= 200 && request.status < 400) {
-                var resp = request.responseText;
-                console.log(resp);
-            }
-        };
-        request.send('category=like&image=' + id + '&usrname=' + user + '&value=1&creator=' + creator);
         var likes = document.getElementById("likes_count");
         var who_liked = document.getElementById("likes_tooltip_text");
         var who_liked_text = who_liked.innerHTML;
         if (!who_liked_text.includes(user)){
             who_liked.innerHTML = user + ", " + who_liked_text;
             likes.innerText = parseInt(likes.innerText) + 1;
+            
+            var request = new XMLHttpRequest();
+            request.open("POST",'../php/misc.php', false);
+            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            request.onload = function() {
+                if (request.status >= 200 && request.status < 400) {
+                    var resp = request.responseText;
+                    console.log(resp);
+                }
+            };
+            request.send('category=like&image=' + id + '&usrname=' + user + '&value=1&creator=' + creator);
         }
     }
 

@@ -19,6 +19,7 @@
     $usr->fetchUser($img['creator']);
     $tbl = new clsTable();
     $tbl->fetchMisc('image', $img_id);
+    echo $tbl->__toHTML();
     $tbl = $tbl->getTable();
     $comments = [];
     $likes = [];

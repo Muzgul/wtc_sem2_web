@@ -24,13 +24,13 @@
         echo $row['url'];
     ?>" alt="<?php 
         echo $row['name'];
-    ?>"><h2><?php    
+    ?>"><div class="img_details"><h2><?php    
         echo $row['name'];
     ?></h2><small><?php
         echo $row['creator'];
     ?> | <?php
         echo date('r', $row['date_created']);
-    ?></small></div><?php
+    ?></small></div></div><?php
         if ($items == $per_page - 1){
             $items = 0;
             ?></div><?php
@@ -42,6 +42,7 @@
     }
     
     ?>
-        <button id="page_prev">Prev</button><button id="page_next">Next</button>
+        <img id="page_prev" src="https://img.icons8.com/ios/100/000000/back-filled.png">
+        <img id="page_next" src="https://img.icons8.com/ios/100/000000/back-filled.png">
     <?php
 ?>

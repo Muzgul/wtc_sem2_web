@@ -101,11 +101,11 @@
             $pdo = $this->_getPDO();
             if ($pdo != null){
                 $root = "http://" . $_SERVER['HTTP_HOST'] . "/assets/images/";
-                $sql = "DELETE FROM `$this->_table` WHERE `id` = '" . $id . "'";
-                unlink($_SERVER['DOCUMENT_ROOT'] . "/assets/images/" . $id);
+                $sql = "DELETE FROM `$this->_table` WHERE `id` = :id";
                 $stmt = null;
                 try {
-                    $stmt = $pdo->query($sql);
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute(['id' => $id]);
                 }catch (Exception $e){
                     $stmt = null;
                     $this->_addStatus("Image [" . $name . "] push error: SQL Exception!");
@@ -113,6 +113,7 @@
                     $this->_addStatus($e);
                 }
                 if ($stmt != null){
+                    unlink($_SERVER['DOCUMENT_ROOT'] . "/assets/images/" . $id);
                     $this->_addStatus("Image [" . $name . "] push success!");
                     $this->fetchImage($url);
                     return true;

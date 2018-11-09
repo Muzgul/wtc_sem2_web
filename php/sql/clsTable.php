@@ -46,16 +46,12 @@
             if ($pdo != null){
                 $date = time();
                 $sql = "INSERT INTO `tblmisc` (`category`, `image`, `usrname`, `value`, `date_created`) VALUES ";
-                $sql .= "('" . $valArr['category'] . "', '" . $valArr['image'] . "' , '" . $valArr['usrname'] . "' , '" . $valArr['value'] . "' , '" . $date . "')";
-                // if ($valArr['category'] == "like"){
-                //     $sql .= " WHERE NOT EXISTS ( SELECT * FROM `tblmisc` WHERE ";
-                //     $sql .= "`category` = '" . $valArr['category'] . "'";
-                //     $sql .= " AND `image` = '" . $valArr['image']. "'";
-                //     $sql .= " AND `usrname` = '" . $valArr['usrname']. "'";
-                // }
+                // $sql .= "('" . $valArr['category'] . "', '" . $valArr['image'] . "' , '" . $valArr['usrname'] . "' , '" . $valArr['value'] . "' , '" . $date . "')";
+                $sql .= "(:category, :image , :usrname , :value , :date)";
                 $stmt = null;
                 try {
-                    $stmt = $pdo->query($sql);
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute(['category' => $valArr['category'], 'image' => $valArr['image'], 'usrname' => $valArr['usrname'], 'value' => $valArr['value'], 'date' => $date]);
                 }catch (Exception $e){
                     $stmt = null;
                     $this->_addStatus("Misc [" . $valArr['category'] . "] push error: SQL Exception!");
@@ -78,13 +74,15 @@
             $pdo = $this->_getPDO();
             if ($pdo != null){
                 if (empty($this->_table)){
-                    $sql = "SELECT * FROM `tblmisc` WHERE `$field` = '$value' ORDER BY `date_created` DESC";
+                    $sql = "SELECT * FROM `tblmisc` WHERE `$field` = :value ORDER BY `date_created` DESC";
                     $stmt = null;
                     try {
-                        $stmt = $pdo->query($sql);
+                        $stmt = $pdo->prepare($sql);
+                        $stmt->execute(['value' => $value]);
                     }catch (Exception $e){
                         $stmt = null;
                         $this->_addStatus("Table [$tblName] fetch error: SQL Exception!");
+                        $this->_addStatus($e);
                     }
                     if ($stmt != null){
                         while ($row = $stmt->fetch())
@@ -100,17 +98,19 @@
         public function updateUsername( $old, $new ){
             $pdo = $this->_getPDO();
             if ($pdo != null){
-                $sql = "UPDATE `tblmisc` SET `usrname` = '$new' WHERE `usrname` = '$old'";
+                $sql = "UPDATE `tblmisc` SET `usrname` = :new WHERE `usrname` = :old";
                 try {
-                    $stmt = $pdo->query($sql);
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute(['new' => $new, 'old' => $old]);
                 }catch (Exception $e){
                     $stmt = null;
                     $this->_addStatus("User [$old] update error in tblmisc: SQL Exception!");
                     return false;
                 }
-                $sql = "UPDATE `tblimage` SET `creator` = '$new' WHERE `creator` = '$old'";
+                $sql = "UPDATE `tblimage` SET `creator` = :new WHERE `creator` = :old";
                 try {
-                    $stmt = $pdo->query($sql);
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute(['new' => $new, 'old' => $old]);
                 }catch (Exception $e){
                     $stmt = null;
                     $this->_addStatus("User [$old] update error in tblimage: SQL Exception!");

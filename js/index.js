@@ -9,8 +9,7 @@ export default function() {
     var images = document.getElementsByClassName("image");
     Array.from(images).forEach(element => {
         element.addEventListener("click", function(e){
-            console.log(e.path[0].id);
-            fetchPage('../php/image.php?image=' + e.path[0].id, "#content", imageJS);    
+            fetchPage('../php/image.php?image=' + element.firstChild.id, "#content", imageJS);    
         });
     });
 

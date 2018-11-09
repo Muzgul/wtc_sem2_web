@@ -5,7 +5,6 @@ import { fetchPage } from "./nav.js";
 
     // Preprocess
     
-    fetchPage('../php/structure/header.php', '#header');
     fetchPage('../php/structure/footer.php', '#footer', footerJS);
 
     var user = fetchPage('../php/session.php');

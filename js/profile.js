@@ -1,7 +1,17 @@
+import { fetchPage } from './nav.js';
+import imageJS from './image.js';
 
 export default function() {
     // JS for profile.php
     var inputs = document.getElementsByTagName("input");
+    
+    var images = document.getElementsByClassName("image");
+    Array.from(images).forEach(element => {
+        element.addEventListener("click", function(e){
+            fetchPage('../php/image.php?image=' + element.firstChild.id, "#content", imageJS);    
+        });
+    });
+    
     var newValue = function (element){
         const input = element.srcElement;
         console.log(input.value);

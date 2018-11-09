@@ -5,6 +5,13 @@
 
 ?>
 
+<div id="myModal" class="modal">
+    <div id="modal-content">
+    <span class="close">&times;</span>
+    <img src="" alt="" id="modalImg">
+    </div>
+</div>
+
 <div id="snap-container">
     <video autoplay="true" id="videoElement" poster="">
     </video>
@@ -31,14 +38,3 @@
     }
     closedir($dir);
 ?>
-
-<!-- The Modal -->
-<div id="myModal" class="modal">
-
-  <!-- Modal content -->
-  <div id="modal-content">
-    <span class="close">&times;</span>
-    <img src="" alt="" id="modalImg">
-  </div>
-
-</div>

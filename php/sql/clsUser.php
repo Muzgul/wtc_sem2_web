@@ -22,10 +22,11 @@
             $pdo = $this->_getPDO();
             if ($pdo != null){
                 if (empty($this->_user)){
-                    $sql = "SELECT * FROM `$this->_table` WHERE `usrname` = '$usrName'";
+                    $sql = "SELECT * FROM `$this->_table` WHERE `usrname` = :usrname";
                     $stmt = null;
                     try {
-                        $stmt = $pdo->query($sql);
+                        $stmt = $pdo->prepare($sql);
+                        $stmt->execute(['usrname' => $usrName]);
                     }catch (Exception $e){
                         $stmt = null;
                         $this->_addStatus("User [$usrName] fetch error: SQL Exception!");
@@ -47,10 +48,12 @@
             $pdo = $this->_getPDO();
             if ($pdo != null){
                 $sql = "INSERT INTO `$this->_table` (`usrname`, `passwd`, `first_name`, `last_name`, `email`, `verif`, `notif`) VALUES ";
-                $sql .= "('" . $valArr['usrname'] . "' , '" . hash($this->_hash, $valArr['passwd']) . "' , '" . $valArr['first_name']. "' , '" .$valArr['last_name']. "' , '" .$valArr['email']. "' , '1', '1')";
+                // $sql .= "('" . $valArr['usrname'] . "' , '" . hash($this->_hash, $valArr['passwd']) . "' , '" . $valArr['first_name']. "' , '" .$valArr['last_name']. "' , '" .$valArr['email']. "' , '1', '1')";
+                $sql .= "(:usrname , :passwd , :first_name , :last_name , :email , '1', '1')";
                 $stmt = null;
                 try {
-                    $stmt = $pdo->query($sql);
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute(['usrname' => $valArr['usrname'], 'passwd' => hash($this->_hash, $valArr['passwd']), 'first_name' => $valArr['first_name'], 'last_name' => $valArr['last_name'], 'email' => $valArr['email']]);
                 }catch (Exception $e){
                     $stmt = null;
                     $this->_addStatus("User [" . $valArr['usrname'] . "] push error: SQL Exception!");
@@ -72,9 +75,10 @@
             if ($pdo != null){
                 if ($field == "passwd")
                     $value = hash($this->_hash, $value);
-                $sql = "UPDATE `$this->_table` SET `$field` = '$value' WHERE `usrname` = '$usrname'";
+                $sql = "UPDATE `$this->_table` SET `$field` = :value WHERE `usrname` = :usrname";
                 try {
-                    $stmt = $pdo->query($sql);
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute(['value' => $value, 'usrname' => $usrname]);
                 }catch (Exception $e){
                     $stmt = null;
                     $this->_addStatus("User [$usrName] update error: SQL Exception!");
