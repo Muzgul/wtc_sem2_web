@@ -15,6 +15,9 @@ export default function(){
     }
 
     var canvas = document.createElement("canvas");
+    var btnSave = document.getElementById("btnSave");
+    var btnCapture = document.getElementById("btnCapture");
+
     var capture = function() {
         canvas.width = video.offsetWidth;
         canvas.height = video.offsetHeight;
@@ -29,6 +32,18 @@ export default function(){
         request.open("POST",'../php/save.php', false);
         request.setRequestHeader('Content-Type', 'application/upload');
         request.send(image);
+        btnSave.hidden = false;
+        btnCapture.hidden = true;
+    };
+
+    var reset = function(){
+        var video = document.querySelector("#videoElement");
+        video.play();
+        document.getElementById("cover").src = "";
+        document.getElementById("cover").style.left = 0 + "px";
+        document.getElementById("cover").style.top = 0 + "px";
+        btnCapture.hidden = false;
+        btnSave.hidden = true;
     };
 
     var save = function(){
@@ -51,14 +66,9 @@ export default function(){
             };
             request.send("submit=create&image=" + image.src + "&name=" + name + "&offx=" + image.style.left + "&offy=" + image.style.top);
         }
+        reset();
     };
-    var reset = function(){
-        var video = document.querySelector("#videoElement");
-        video.play();
-        document.getElementById("cover").src = "";
-        document.getElementById("cover").style.left = 0 + "px";
-        document.getElementById("cover").style.top = 0 + "px";
-    };
+    
     reset();
     document.getElementById("btnReset").addEventListener("click", reset);
     document.getElementById("btnCapture").addEventListener("click", capture);
